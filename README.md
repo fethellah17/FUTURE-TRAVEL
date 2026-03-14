@@ -66,6 +66,36 @@ src/
 └── data/          # Données statiques
 ```
 
+## Déploiement sur Vercel
+
+Ce projet est optimisé pour un déploiement facile sur Vercel. Suivez ces étapes :
+
+### Déploiement automatique
+
+1. **Connecter votre dépôt Git** :
+   - Allez sur [vercel.com](https://vercel.com)
+   - Cliquez sur "New Project"
+   - Importez votre dépôt GitHub/GitLab/Bitbucket
+
+2. **Configuration automatique** :
+   - Vercel détectera automatiquement que c'est un projet Vite
+   - Le fichier `vercel.json` configure le build et le routing SPA
+
+3. **Déploiement** :
+   - Cliquez sur "Deploy"
+   - Votre application sera en ligne en quelques minutes
+
+### Configuration du routing SPA
+
+Le fichier `vercel.json` à la racine du projet gère automatiquement le routing Single Page Application (SPA). Toutes les requêtes sont redirigées vers `index.html`, ce qui permet à React Router de gérer la navigation sans erreurs 404.
+
+### Variables d'environnement
+
+Si vous avez besoin de variables d'environnement (ex: clés API Supabase) :
+1. Allez dans les paramètres du projet sur Vercel
+2. Ajoutez vos variables dans la section "Environment Variables"
+3. Redéployez votre application
+
 ## Contribution
 
 Les contributions sont bienvenues. Veuillez créer une branche pour vos modifications et soumettre une pull request.
