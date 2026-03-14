@@ -1,73 +1,75 @@
-# Welcome to your Lovable project
+# Zahrat Al Houda - Agence de Voyages
 
-## Project info
+Bienvenue sur le dépôt de **Zahrat Al Houda**, une agence de voyages moderne proposant des expériences de voyage inoubliables.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## À propos
 
-## How can I edit this code?
+Zahrat Al Houda est une plateforme web dédiée à la réservation et la gestion de voyages. Notre application offre une interface intuitive pour explorer, réserver et gérer vos voyages en toute simplicité.
 
-There are several ways of editing your application.
+## Technologies utilisées
 
-**Use Lovable**
+Ce projet est construit avec les technologies modernes suivantes :
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **React** - Bibliothèque JavaScript pour les interfaces utilisateur
+- **Vite** - Outil de build ultra-rapide
+- **TypeScript** - Typage statique pour JavaScript
+- **Tailwind CSS** - Framework CSS utilitaire
+- **shadcn-ui** - Composants UI réutilisables
+- **Supabase** - Backend et base de données (configuration en cours)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Installation et démarrage
 
-**Use your preferred IDE**
+### Prérequis
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (v16 ou supérieur)
+- npm ou bun
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Étapes d'installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# 1. Cloner le dépôt
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Naviguer vers le répertoire du projet
+cd zahrat-al-houda
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Installer les dépendances
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Démarrer le serveur de développement
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Le serveur sera accessible à `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Scripts disponibles
 
-**Use GitHub Codespaces**
+- `npm run dev` - Démarrer le serveur de développement
+- `npm run build` - Construire l'application pour la production
+- `npm run preview` - Prévisualiser la version de production
+- `npm run lint` - Vérifier la qualité du code
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Configuration de la base de données
 
-## What technologies are used for this project?
+La base de données **Supabase** sera configurée prochainement. Les détails de configuration seront ajoutés une fois l'intégration complète.
 
-This project is built with:
+## Structure du projet
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── components/     # Composants React réutilisables
+├── pages/         # Pages de l'application
+├── contexts/      # Contextes React
+├── hooks/         # Hooks personnalisés
+├── lib/           # Utilitaires et fonctions
+├── types/         # Définitions TypeScript
+└── data/          # Données statiques
+```
 
-## How can I deploy this project?
+## Contribution
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Les contributions sont bienvenues. Veuillez créer une branche pour vos modifications et soumettre une pull request.
 
-## Can I connect a custom domain to my Lovable project?
+## Licence
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Ce projet est sous licence propriétaire. Tous les droits sont réservés à Zahrat Al Houda.
