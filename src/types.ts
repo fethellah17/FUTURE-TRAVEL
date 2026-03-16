@@ -1,4 +1,4 @@
-export type VoyageCategory = 'Omrah' | 'Voyage Organisé' | 'Voyage à la Carte';
+export type VoyageCategory = 'Omrah' | 'Voyage Organisé' | 'Voyage à la Carte' | 'Voyage National';
 export type VoyageStatus = 'normal' | 'almost-full' | 'full' | 'limited-offer';
 
 export interface Stage {
@@ -30,6 +30,11 @@ export interface Voyage {
   visaRequired?: string; // Besoin VISA (ex: "Oui", "Non", "")
   roomType?: string; // Type de chambre (ex: "Double", "Triple", "")
   mealPlan?: string; // Pension (ex: "Pension complète", "Demi-pension", "")
+  // Champs spécifiques pour Voyage National
+  departureTime?: string; // Heure de départ (ex: "07:00")
+  returnTime?: string; // Heure de retour (ex: "18:00")
+  hotelName?: string; // Nom de l'hôtel (ex: "Hôtel Sahara Palace")
+  starRating?: string; // Nombre d'étoiles (ex: "4 étoiles")
 }
 
 export type MessageType = 'Billetterie' | 'Devis';

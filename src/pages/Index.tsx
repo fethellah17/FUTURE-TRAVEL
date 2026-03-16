@@ -116,7 +116,7 @@ const Index = () => {
           {/* Filtre de catégories */}
           <div className="mb-8">
             <CategoryFilter
-              categories={["Omrah", "Voyage Organisé", "Voyage à la Carte"]}
+              categories={["Omrah", "Voyage Organisé", "Voyage National", "Voyage à la Carte"]}
               active={selectedCategory}
               onChange={setSelectedCategory}
             />

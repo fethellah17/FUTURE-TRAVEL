@@ -8,6 +8,7 @@ const navLinks = [
   { to: "/", label: "Accueil" },
   { to: "/omrah", label: "Omrah" },
   { to: "/voyage-organise", label: "Voyage Organisé" },
+  { to: "/voyage-national", label: "Voyage National" },
   { to: "/voyage-a-la-carte", label: "Voyage à la Carte" },
   { to: "/billetterie", label: "Billetterie" },
   { to: "/devis", label: "Devis Gratuit" },

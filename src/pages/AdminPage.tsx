@@ -16,6 +16,30 @@ import { fr } from "date-fns/locale";
 import { formatPrice } from "@/lib/formatters";
 import { generateMessagePDF } from "@/lib/pdfGenerator";
 
+// Composant SVG pour le drapeau algérien
+const AlgerianFlagIcon = () => (
+  <svg
+    viewBox="0 0 900 600"
+    className="w-5 h-5 drop-shadow-md inline-block"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Bande verte */}
+    <rect width="450" height="600" fill="#007A5E" />
+    {/* Bande blanche */}
+    <rect x="450" width="450" height="600" fill="#FFFFFF" />
+    {/* Croissant rouge */}
+    <g transform="translate(450, 300)">
+      {/* Croissant */}
+      <circle cx="0" cy="0" r="120" fill="#EF2B2D" />
+      <circle cx="30" cy="0" r="120" fill="#FFFFFF" />
+      {/* Étoile rouge à 5 branches */}
+      <g fill="#EF2B2D">
+        <polygon points="0,-80 20,-30 75,-30 35,15 55,65 0,20 -55,65 -35,15 -75,-30 -20,-30" />
+      </g>
+    </g>
+  </svg>
+);
+
 type Tab = "inbox" | "voyages";
 
 const AdminPage = () => {
@@ -486,7 +510,7 @@ const VoyagesView = ({
   setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [newVoyage, setNewVoyage] = useState({
-    title: "", imageUrl: "", imageUrls: [] as string[], price: "", priceAdult: "", priceChild: "", description: "", category: "Omrah" as VoyageCategory, duration: "", date: "", status: "normal" as VoyageStatus, flightType: "", visaRequired: "", roomType: "", mealPlan: "",
+    title: "", imageUrl: "", imageUrls: [] as string[], price: "", priceAdult: "", priceChild: "", description: "", category: "Omrah" as VoyageCategory, duration: "", date: "", status: "normal" as VoyageStatus, flightType: "", visaRequired: "", roomType: "", mealPlan: "", departureTime: "", returnTime: "", hotelName: "", starRating: "",
   });
   const [newStartDate, setNewStartDate] = useState<Date | undefined>();
   const [newEndDate, setNewEndDate] = useState<Date | undefined>();
@@ -498,7 +522,7 @@ const VoyagesView = ({
   
   const [editingVoyage, setEditingVoyage] = useState<Voyage | null>(null);
   const [editForm, setEditForm] = useState({
-    title: "", imageUrl: "", imageUrls: [] as string[], price: "", priceAdult: "", priceChild: "", description: "", category: "Omrah" as VoyageCategory, duration: "", date: "", status: "normal" as VoyageStatus, flightType: "", visaRequired: "", roomType: "", mealPlan: "",
+    title: "", imageUrl: "", imageUrls: [] as string[], price: "", priceAdult: "", priceChild: "", description: "", category: "Omrah" as VoyageCategory, duration: "", date: "", status: "normal" as VoyageStatus, flightType: "", visaRequired: "", roomType: "", mealPlan: "", departureTime: "", returnTime: "", hotelName: "", starRating: "",
   });
   const [editStartDate, setEditStartDate] = useState<Date | undefined>();
   const [editEndDate, setEditEndDate] = useState<Date | undefined>();
@@ -564,13 +588,30 @@ const VoyagesView = ({
     e.preventDefault();
     if (!newVoyage.title || !newVoyage.priceAdult || !newVoyage.priceChild) return;
     
-    // Pour "Voyage à la Carte", utiliser des valeurs par défaut
+    // Validation spécifique pour Voyage National
+    if (newVoyage.category === "Voyage National") {
+      if (!newStartDate || !newEndDate) {
+        toast.error("Les dates sont obligatoires pour un Voyage National");
+        return;
+      }
+      if (!newVoyage.departureTime || !newVoyage.returnTime) {
+        toast.error("Les horaires de départ et retour sont obligatoires");
+        return;
+      }
+    }
+    
+    // Pour "Voyage à la Carte" et "Voyage National", utiliser des valeurs par défaut
     let duration, date;
     let totalDays = 0;
     
     if (newVoyage.category === "Voyage à la Carte") {
       duration = "Sur mesure";
       date = "Dates flexibles";
+    } else if (newVoyage.category === "Voyage National") {
+      const calculated = calculateDurationAndDate(newStartDate, newEndDate);
+      duration = calculated.duration;
+      date = calculated.date;
+      totalDays = getTotalDays(newStartDate, newEndDate);
     } else {
       const calculated = calculateDurationAndDate(newStartDate, newEndDate);
       duration = calculated.duration;
@@ -601,14 +642,18 @@ const VoyagesView = ({
         createdAt: new Date().toISOString(),
         stages: needsStages(newVoyage.category) ? newStages : undefined,
         status: newVoyage.status,
-        flightType: newVoyage.flightType || undefined,
-        visaRequired: newVoyage.visaRequired || undefined,
-        roomType: newVoyage.roomType || undefined,
-        mealPlan: newVoyage.mealPlan || undefined,
+        flightType: newVoyage.category === "Voyage National" ? newVoyage.flightType : (newVoyage.flightType || undefined),
+        visaRequired: newVoyage.category === "Voyage National" ? "Non" : (newVoyage.visaRequired || undefined),
+        roomType: newVoyage.category === "Voyage National" ? newVoyage.roomType : (newVoyage.roomType || undefined),
+        mealPlan: newVoyage.category === "Voyage National" ? newVoyage.mealPlan : (newVoyage.mealPlan || undefined),
+        departureTime: newVoyage.category === "Voyage National" ? newVoyage.departureTime : undefined,
+        returnTime: newVoyage.category === "Voyage National" ? newVoyage.returnTime : undefined,
+        hotelName: newVoyage.category === "Voyage National" ? newVoyage.hotelName : undefined,
+        starRating: newVoyage.category === "Voyage National" ? newVoyage.starRating : undefined,
       };
       addVoyage(v);
       setShowAddForm(false);
-      setNewVoyage({ title: "", imageUrl: "", imageUrls: [], price: "", priceAdult: "", priceChild: "", description: "", category: "Omrah", duration: "", date: "", status: "normal", flightType: "", visaRequired: "", roomType: "", mealPlan: "" });
+      setNewVoyage({ title: "", imageUrl: "", imageUrls: [], price: "", priceAdult: "", priceChild: "", description: "", category: "Omrah", duration: "", date: "", status: "normal", flightType: "", visaRequired: "", roomType: "", mealPlan: "", departureTime: "", returnTime: "", hotelName: "", starRating: "" });
       setNewStartDate(undefined);
       setNewEndDate(undefined);
       setNewStages([
@@ -643,6 +688,10 @@ const VoyagesView = ({
       visaRequired: voyage.visaRequired || "",
       roomType: voyage.roomType || "",
       mealPlan: voyage.mealPlan || "",
+      departureTime: voyage.departureTime || "",
+      returnTime: voyage.returnTime || "",
+      hotelName: voyage.hotelName || "",
+      starRating: voyage.starRating || "",
     });
     
     // Parser et charger les dates existantes si disponibles
@@ -684,13 +733,35 @@ const VoyagesView = ({
     e.preventDefault();
     if (!editForm.title || !editForm.priceAdult || !editForm.priceChild || !editingVoyage) return;
     
-    // Pour "Voyage à la Carte", utiliser des valeurs par défaut
+    // Validation spécifique pour Voyage National
+    if (editForm.category === "Voyage National") {
+      if (!editStartDate || !editEndDate) {
+        toast.error("Les dates sont obligatoires pour un Voyage National");
+        return;
+      }
+      if (!editForm.departureTime || !editForm.returnTime) {
+        toast.error("Les horaires de départ et retour sont obligatoires");
+        return;
+      }
+    }
+    
+    // Pour "Voyage à la Carte" et "Voyage National", utiliser des valeurs par défaut
     let duration, date;
     let totalDays = 0;
     
     if (editForm.category === "Voyage à la Carte") {
       duration = "Sur mesure";
       date = "Dates flexibles";
+    } else if (editForm.category === "Voyage National") {
+      if (editStartDate && editEndDate) {
+        const calculated = calculateDurationAndDate(editStartDate, editEndDate);
+        duration = calculated.duration;
+        date = calculated.date;
+        totalDays = getTotalDays(editStartDate, editEndDate);
+      } else {
+        duration = editingVoyage.duration;
+        date = editingVoyage.date;
+      }
     } else {
       // Si les dates ont été modifiées, calculer les nouvelles valeurs
       if (editStartDate && editEndDate) {
@@ -726,10 +797,14 @@ const VoyagesView = ({
         date: date || editForm.date,
         stages: needsStages(editForm.category) ? editStages : undefined,
         status: editForm.status,
-        flightType: editForm.flightType || undefined,
-        visaRequired: editForm.visaRequired || undefined,
-        roomType: editForm.roomType || undefined,
-        mealPlan: editForm.mealPlan || undefined,
+        flightType: editForm.category === "Voyage National" ? editForm.flightType : (editForm.flightType || undefined),
+        visaRequired: editForm.category === "Voyage National" ? "Non" : (editForm.visaRequired || undefined),
+        roomType: editForm.category === "Voyage National" ? editForm.roomType : (editForm.roomType || undefined),
+        mealPlan: editForm.category === "Voyage National" ? editForm.mealPlan : (editForm.mealPlan || undefined),
+        departureTime: editForm.category === "Voyage National" ? editForm.departureTime : undefined,
+        returnTime: editForm.category === "Voyage National" ? editForm.returnTime : undefined,
+        hotelName: editForm.category === "Voyage National" ? editForm.hotelName : undefined,
+        starRating: editForm.category === "Voyage National" ? editForm.starRating : undefined,
       });
       setEditingVoyage(null);
       setEditStartDate(undefined);
@@ -771,6 +846,7 @@ const VoyagesView = ({
                 <select value={newVoyage.category} onChange={(e) => setNewVoyage({ ...newVoyage, category: e.target.value as VoyageCategory })} className="form-input">
                   <option>Omrah</option>
                   <option>Voyage Organisé</option>
+                  <option>Voyage National</option>
                   <option>Voyage à la Carte</option>
                 </select>
               </div>
@@ -870,14 +946,105 @@ const VoyagesView = ({
               </div>
             )}
 
+            {/* Champs de contrôle pour Voyage National */}
+            {newVoyage.category === "Voyage National" && (
+              <div className="space-y-4 pt-2">
+                <div className="flex items-center gap-2 pt-2">
+                  <div className="h-px flex-1 bg-accent/20" />
+                  <div className="flex items-center gap-1">
+                    <h3 className="text-sm font-semibold text-primary">Détails du Voyage National</h3>
+                    <AlgerianFlagIcon />
+                  </div>
+                  <div className="h-px flex-1 bg-accent/20" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Type de Vol</label>
+                    <select value={newVoyage.flightType} onChange={(e) => setNewVoyage({ ...newVoyage, flightType: e.target.value })} className="form-input">
+                      <option value="Avec vol">Avec vol</option>
+                      <option value="Sans vol">Sans vol</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground mt-1">Sélectionnez le type de vol</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Besoin d'un VISA</label>
+                    <div className="form-input bg-muted/30 cursor-not-allowed flex items-center text-muted-foreground">
+                      Non (Algérie)
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">Automatiquement défini</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Nom de l'Hôtel</label>
+                    <input 
+                      type="text" 
+                      value={newVoyage.hotelName || ""} 
+                      onChange={(e) => setNewVoyage({ ...newVoyage, hotelName: e.target.value })} 
+                      className="form-input" 
+                      placeholder="Ex: Hôtel Sahara Palace"
+                      maxLength={100}
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">Saisissez le nom de l'hôtel</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Nombre d'étoiles</label>
+                    <select value={newVoyage.starRating || ""} onChange={(e) => setNewVoyage({ ...newVoyage, starRating: e.target.value })} className="form-input">
+                      <option value="">Sélectionner</option>
+                      <option value="1 étoile">1 étoile</option>
+                      <option value="2 étoiles">2 étoiles</option>
+                      <option value="3 étoiles">3 étoiles</option>
+                      <option value="4 étoiles">4 étoiles</option>
+                      <option value="5 étoiles">5 étoiles</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground mt-1">Sélectionnez le nombre d'étoiles</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Type de Chambre</label>
+                    <select value={newVoyage.visaRequired || ""} onChange={(e) => setNewVoyage({ ...newVoyage, visaRequired: e.target.value })} className="form-input">
+                      <option value="">Sélectionner</option>
+                      <option value="Single">Single</option>
+                      <option value="Double">Double</option>
+                      <option value="Triple">Triple</option>
+                      <option value="Quadruple">Quadruple</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground mt-1">Sélectionnez le type de chambre</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Type de Pension</label>
+                    <select value={newVoyage.mealPlan || ""} onChange={(e) => setNewVoyage({ ...newVoyage, mealPlan: e.target.value })} className="form-input">
+                      <option value="">Sélectionner</option>
+                      <option value="Petit-déjeuner seul">Petit-déjeuner seul</option>
+                      <option value="Demi-pension">Demi-pension</option>
+                      <option value="Pension complète">Pension complète</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground mt-1">Sélectionnez le type de pension</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium mb-1.5">
-                Dates du voyage {newVoyage.category !== "Voyage à la Carte" && "*"}
+                Dates du voyage {newVoyage.category !== "Voyage à la Carte" && newVoyage.category !== "Voyage National" && "*"}
               </label>
               {newVoyage.category === "Voyage à la Carte" ? (
                 <div className="form-input bg-muted/30 cursor-not-allowed flex items-center justify-center text-muted-foreground">
                   Dates flexibles - Sur mesure
                 </div>
+              ) : newVoyage.category === "Voyage National" ? (
+                <>
+                  <DateRangePicker
+                    startDate={newStartDate}
+                    endDate={newEndDate}
+                    onStartDateChange={setNewStartDate}
+                    onEndDateChange={setNewEndDate}
+                  />
+                  {newStartDate && newEndDate && (
+                    <p className="text-xs text-primary mt-2 font-medium">
+                      ✓ Durée : {getCalculatedDuration(newStartDate, newEndDate)} • 
+                      Période : {format(newStartDate, "dd/MM/yyyy")} - {format(newEndDate, "dd/MM/yyyy")}
+                    </p>
+                  )}
+                </>
               ) : (
                 <>
                   <DateRangePicker
@@ -895,6 +1062,34 @@ const VoyagesView = ({
                 </>
               )}
             </div>
+
+            {/* Champs d'horaires pour Voyage National */}
+            {newVoyage.category === "Voyage National" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1.5">Heure de Départ (وقت الإقلاع) *</label>
+                  <input 
+                    type="time" 
+                    value={newVoyage.departureTime} 
+                    onChange={(e) => setNewVoyage({ ...newVoyage, departureTime: e.target.value })} 
+                    className="form-input" 
+                    required 
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">Heure exacte du départ du bus</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1.5">Heure de Retour (وقت العودة) *</label>
+                  <input 
+                    type="time" 
+                    value={newVoyage.returnTime} 
+                    onChange={(e) => setNewVoyage({ ...newVoyage, returnTime: e.target.value })} 
+                    className="form-input" 
+                    required 
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">Heure prévue de retour</p>
+                </div>
+              </div>
+            )}
             <MultiImageUpload
               value={newVoyage.imageUrls}
               onChange={(imageUrls) => setNewVoyage({ ...newVoyage, imageUrls })}
@@ -984,6 +1179,7 @@ const VoyagesView = ({
                     >
                       <option>Omrah</option>
                       <option>Voyage Organisé</option>
+                      <option>Voyage National</option>
                       <option>Voyage à la Carte</option>
                     </select>
                   </div>
@@ -1082,14 +1278,104 @@ const VoyagesView = ({
                     </div>
                   </div>
                 )}
+
+                {/* Champs de contrôle pour Voyage National */}
+                {editForm.category === "Voyage National" && (
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-center gap-2 pt-2">
+                      <div className="h-px flex-1 bg-accent/20" />
+                      <div className="flex items-center gap-1">
+                        <h3 className="text-sm font-semibold text-primary">Détails du Voyage National</h3>
+                        <AlgerianFlagIcon />
+                      </div>
+                      <div className="h-px flex-1 bg-accent/20" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-1.5">Type de Vol</label>
+                        <select value={editForm.flightType} onChange={(e) => setEditForm({ ...editForm, flightType: e.target.value })} className="form-input">
+                          <option value="Avec vol">Avec vol</option>
+                          <option value="Sans vol">Sans vol</option>
+                        </select>
+                        <p className="text-xs text-muted-foreground mt-1">Sélectionnez le type de vol</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1.5">Besoin d'un VISA</label>
+                        <div className="form-input bg-muted/30 cursor-not-allowed flex items-center text-muted-foreground">
+                          Non (Algérie)
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">Automatiquement défini</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1.5">Nom de l'Hôtel</label>
+                        <input 
+                          type="text" 
+                          value={editForm.hotelName || ""} 
+                          onChange={(e) => setEditForm({ ...editForm, hotelName: e.target.value })} 
+                          className="form-input" 
+                          placeholder="Ex: Hôtel Sahara Palace"
+                          maxLength={100}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">Saisissez le nom de l'hôtel</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1.5">Nombre d'étoiles</label>
+                        <select value={editForm.starRating || ""} onChange={(e) => setEditForm({ ...editForm, starRating: e.target.value })} className="form-input">
+                          <option value="">Sélectionner</option>
+                          <option value="1 étoile">1 étoile</option>
+                          <option value="2 étoiles">2 étoiles</option>
+                          <option value="3 étoiles">3 étoiles</option>
+                          <option value="4 étoiles">4 étoiles</option>
+                          <option value="5 étoiles">5 étoiles</option>
+                        </select>
+                        <p className="text-xs text-muted-foreground mt-1">Sélectionnez le nombre d'étoiles</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1.5">Type de Chambre</label>
+                        <select value={editForm.visaRequired || ""} onChange={(e) => setEditForm({ ...editForm, visaRequired: e.target.value })} className="form-input">
+                          <option value="">Sélectionner</option>
+                          <option value="Single">Single</option>
+                          <option value="Double">Double</option>
+                          <option value="Triple">Triple</option>
+                          <option value="Quadruple">Quadruple</option>
+                        </select>
+                        <p className="text-xs text-muted-foreground mt-1">Sélectionnez le type de chambre</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1.5">Type de Pension</label>
+                        <select value={editForm.flightType === "Avec vol" ? "Pension complète" : "Demi-pension"} onChange={(e) => {}} className="form-input">
+                          <option value="Petit-déjeuner seul">Petit-déjeuner seul</option>
+                          <option value="Demi-pension">Demi-pension</option>
+                          <option value="Pension complète">Pension complète</option>
+                        </select>
+                        <p className="text-xs text-muted-foreground mt-1">Sélectionnez le type de pension</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-medium mb-1.5">
-                    Dates du voyage {editForm.category !== "Voyage à la Carte" && "*"}
+                    Dates du voyage {editForm.category !== "Voyage à la Carte" && editForm.category !== "Voyage National" && "*"}
                   </label>
                   {editForm.category === "Voyage à la Carte" ? (
                     <div className="form-input bg-muted/30 cursor-not-allowed flex items-center justify-center text-muted-foreground">
                       Dates flexibles - Sur mesure
                     </div>
+                  ) : editForm.category === "Voyage National" ? (
+                    <>
+                      <DateRangePicker
+                        startDate={editStartDate}
+                        endDate={editEndDate}
+                        onStartDateChange={setEditStartDate}
+                        onEndDateChange={setEditEndDate}
+                      />
+                      {editStartDate && editEndDate && (
+                        <p className="text-xs text-primary mt-2 font-medium">
+                          ✓ Durée : {getCalculatedDuration(editStartDate, editEndDate)} • 
+                          Période : {format(editStartDate, "dd/MM/yyyy")} - {format(editEndDate, "dd/MM/yyyy")}
+                        </p>
+                      )}
+                    </>
                   ) : (
                     <>
                       <DateRangePicker
@@ -1107,6 +1393,34 @@ const VoyagesView = ({
                     </>
                   )}
                 </div>
+
+                {/* Champs d'horaires pour Voyage National */}
+                {editForm.category === "Voyage National" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1.5">Heure de Départ (وقت الإقلاع) *</label>
+                      <input 
+                        type="time" 
+                        value={editForm.departureTime} 
+                        onChange={(e) => setEditForm({ ...editForm, departureTime: e.target.value })} 
+                        className="form-input" 
+                        required 
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">Heure exacte du départ du bus</p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1.5">Heure de Retour (وقت العودة) *</label>
+                      <input 
+                        type="time" 
+                        value={editForm.returnTime} 
+                        onChange={(e) => setEditForm({ ...editForm, returnTime: e.target.value })} 
+                        className="form-input" 
+                        required 
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">Heure prévue de retour</p>
+                    </div>
+                  </div>
+                )}
                 <MultiImageUpload
                   value={editForm.imageUrls}
                   onChange={(imageUrls) => setEditForm({ ...editForm, imageUrls })}

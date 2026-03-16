@@ -11,6 +11,30 @@ import SocialShareButtons from "../components/SocialShareButtons";
 import { useMetaTags } from "@/hooks/useMetaTags";
 import logo from "@/assets/logo.png";
 
+// Composant SVG pour le drapeau algérien
+const AlgerianFlagIcon = () => (
+  <svg
+    viewBox="0 0 900 600"
+    className="w-8 h-8 drop-shadow-md inline-block"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Bande verte */}
+    <rect width="450" height="600" fill="#007A5E" />
+    {/* Bande blanche */}
+    <rect x="450" width="450" height="600" fill="#FFFFFF" />
+    {/* Croissant rouge */}
+    <g transform="translate(450, 300)">
+      {/* Croissant */}
+      <circle cx="0" cy="0" r="120" fill="#EF2B2D" />
+      <circle cx="30" cy="0" r="120" fill="#FFFFFF" />
+      {/* Étoile rouge à 5 branches */}
+      <g fill="#EF2B2D">
+        <polygon points="0,-80 20,-30 75,-30 35,15 55,65 0,20 -55,65 -35,15 -75,-30 -20,-30" />
+      </g>
+    </g>
+  </svg>
+);
+
 const VoyageDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -166,6 +190,11 @@ const VoyageDetailPage = () => {
               <span className="inline-block text-upperspace bg-accent/10 text-accent px-3 py-1 rounded-md text-xs font-semibold mb-3">
                 {voyage.category}
               </span>
+              {voyage.category === "Voyage National" && (
+                <span className="inline-block ml-2" title="Algérie">
+                  <AlgerianFlagIcon />
+                </span>
+              )}
               <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
                 {voyage.title}
               </h1>
@@ -232,6 +261,50 @@ const VoyageDetailPage = () => {
                 </div>
               </div>
             </div>
+
+            {/* Horaires pour Voyage National */}
+            {voyage.category === "Voyage National" && voyage.departureTime && voyage.returnTime && (
+              <div className="py-8 border-b border-accent/20">
+                <h2 className="text-2xl font-bold text-primary mb-6">
+                  Horaires du Voyage
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="bg-accent/10 p-4 rounded-lg">
+                    <p className="text-sm font-semibold text-primary mb-2">Heure de Départ (وقت الإقلاع)</p>
+                    <p className="text-2xl font-bold text-accent">{voyage.departureTime}</p>
+                  </div>
+                  <div className="bg-accent/10 p-4 rounded-lg">
+                    <p className="text-sm font-semibold text-primary mb-2">Heure de Retour (وقت العودة)</p>
+                    <p className="text-2xl font-bold text-accent">{voyage.returnTime}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Hébergement pour Voyage National */}
+            {voyage.category === "Voyage National" && voyage.hotelName && (
+              <div className="py-8 border-b border-accent/20">
+                <h2 className="text-2xl font-bold text-primary mb-6">
+                  Hébergement
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="bg-accent/10 p-4 rounded-lg">
+                    <p className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
+                      <span>🏨</span> Hôtel
+                    </p>
+                    <p className="text-lg font-semibold text-primary">{voyage.hotelName}</p>
+                  </div>
+                  {voyage.starRating && (
+                    <div className="bg-accent/10 p-4 rounded-lg">
+                      <p className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
+                        <span>⭐</span> Classification
+                      </p>
+                      <p className="text-lg font-semibold text-primary">{voyage.starRating}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Étapes du voyage (si disponibles) */}
             {voyage.stages && voyage.stages.length > 0 && (

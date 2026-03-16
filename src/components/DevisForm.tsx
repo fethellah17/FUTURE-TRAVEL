@@ -33,8 +33,8 @@ const DevisForm = ({ prefilledDestination = "", showLayout = false, voyageData }
     category: voyageData?.category || "",
     besoinVisa: voyageData?.visaRequired || "",
     volAvecSans: voyageData?.flightType || "",
-    nomHotel: getHotelNames(),
-    nombreEtoiles: "",
+    nomHotel: voyageData?.category === "Voyage National" && voyageData?.hotelName ? voyageData.hotelName : getHotelNames(),
+    nombreEtoiles: voyageData?.category === "Voyage National" && voyageData?.starRating ? voyageData.starRating : "",
     nombreChambres: "",
     typeChambre: voyageData?.roomType || "",
     pension: voyageData?.mealPlan || "",
@@ -112,8 +112,8 @@ const DevisForm = ({ prefilledDestination = "", showLayout = false, voyageData }
           category: voyageData?.category || "",
           besoinVisa: voyageData?.visaRequired || "",
           volAvecSans: voyageData?.flightType || "",
-          nomHotel: getHotelNames(),
-          nombreEtoiles: "",
+          nomHotel: voyageData?.category === "Voyage National" && voyageData?.hotelName ? voyageData.hotelName : getHotelNames(),
+          nombreEtoiles: voyageData?.category === "Voyage National" && voyageData?.starRating ? voyageData.starRating : "",
           nombreChambres: "",
           typeChambre: voyageData?.roomType || "",
           pension: voyageData?.mealPlan || "",
@@ -281,21 +281,50 @@ const DevisForm = ({ prefilledDestination = "", showLayout = false, voyageData }
               Hébergement
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Field label={voyageData?.stages && voyageData.stages.length > 0 ? "Hôtel(s) du forfait" : "Nom de l'hôtel"}>
-                <input
-                  type="text"
-                  value={form.nomHotel}
-                  onChange={(e) => setForm({ ...form, nomHotel: e.target.value })}
-                  className={`devis-input ${voyageData?.stages && voyageData.stages.length > 0 ? "bg-blue-50 border-blue-200 cursor-not-allowed" : ""}`}
-                  placeholder="Nom de l'hôtel souhaité"
-                  disabled={!!(voyageData?.stages && voyageData.stages.length > 0)}
-                  readOnly={!!(voyageData?.stages && voyageData.stages.length > 0)}
-                  title={voyageData?.stages && voyageData.stages.length > 0 ? "Hôtels définis par l'agence pour ce forfait" : ""}
-                />
+              <Field label={voyageData?.stages && voyageData.stages.length > 0 ? "Hôtel(s) du forfait" : voyageData?.category === "Voyage National" ? "Hôtel 🏨" : "Nom de l'hôtel"}>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={form.nomHotel}
+                    onChange={(e) => setForm({ ...form, nomHotel: e.target.value })}
+                    className={`devis-input ${
+                      voyageData?.stages && voyageData.stages.length > 0 
+                        ? "bg-blue-50 border-blue-200 cursor-not-allowed" 
+                        : voyageData?.category === "Voyage National" && voyageData?.hotelName
+                        ? "bg-amber-50 border-amber-200 cursor-not-allowed"
+                        : ""
+                    }`}
+                    placeholder="Nom de l'hôtel souhaité"
+                    disabled={!!(voyageData?.stages && voyageData.stages.length > 0) || (voyageData?.category === "Voyage National" && !!voyageData?.hotelName)}
+                    readOnly={!!(voyageData?.stages && voyageData.stages.length > 0) || (voyageData?.category === "Voyage National" && !!voyageData?.hotelName)}
+                    title={voyageData?.stages && voyageData.stages.length > 0 ? "Hôtels définis par l'agence pour ce forfait" : voyageData?.category === "Voyage National" && voyageData?.hotelName ? "Hôtel défini pour ce voyage national" : ""}
+                  />
+                  {(voyageData?.stages && voyageData.stages.length > 0) || (voyageData?.category === "Voyage National" && voyageData?.hotelName) ? (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-600 text-sm font-semibold">
+                      🔒
+                    </div>
+                  ) : null}
+                </div>
               </Field>
               
-              {/* Masquer le champ "Nombre d'étoiles" si c'est un forfait fixe avec hôtels définis */}
-              {!(isFixedPackage && voyageData?.stages && voyageData.stages.length > 0) && (
+              {/* Nombre d'étoiles - Affichage dynamique pour Voyage National */}
+              {voyageData?.category === "Voyage National" && voyageData?.starRating ? (
+                <Field label="Classification ⭐">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={voyageData.starRating}
+                      className="devis-input bg-amber-50 border-amber-200 cursor-not-allowed"
+                      disabled
+                      readOnly
+                      title="Classification définie pour ce voyage national"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-600 text-sm font-semibold">
+                      🔒
+                    </div>
+                  </div>
+                </Field>
+              ) : !(isFixedPackage && voyageData?.stages && voyageData.stages.length > 0) ? (
                 <Field label="Nombre d'étoiles">
                   <select
                     value={form.nombreEtoiles}
@@ -308,7 +337,7 @@ const DevisForm = ({ prefilledDestination = "", showLayout = false, voyageData }
                     <option value="5 étoiles">5 étoiles</option>
                   </select>
                 </Field>
-              )}
+              ) : null}
               
               <Field label="Nombre de chambres">
                 <input

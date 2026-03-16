@@ -3,6 +3,31 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import VoyageStatusBadge from "./VoyageStatusBadge";
 
+// Composant SVG pour le drapeau algérien
+const AlgerianFlagIcon = () => (
+  <svg
+    viewBox="0 0 900 600"
+    className="w-6 h-6 drop-shadow-md"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Bande verte */}
+    <rect width="450" height="600" fill="#007A5E" />
+    {/* Bande blanche */}
+    <rect x="450" width="450" height="600" fill="#FFFFFF" />
+    {/* Croissant rouge */}
+    <g transform="translate(450, 300)">
+      {/* Croissant */}
+      <circle cx="0" cy="0" r="120" fill="#EF2B2D" />
+      <circle cx="30" cy="0" r="120" fill="#FFFFFF" />
+      {/* Étoile rouge à 5 branches */}
+      <g fill="#EF2B2D">
+        <polygon points="0,-80 20,-30 75,-30 35,15 55,65 0,20 -55,65 -35,15 -75,-30 -20,-30" />
+      </g>
+    </g>
+  </svg>
+);
+
+
 interface TripCardProps {
   voyage: Voyage;
   index?: number;
@@ -19,7 +44,40 @@ const getStageIcon = (stageName: string) => {
   return null;
 };
 
+// Fonction pour parser et formater la date pour Voyage National
+const formatNationalVoyageDate = (dateStr: string): string => {
+  if (!dateStr || dateStr === "Dates flexibles") return "Dates flexibles";
+  
+  try {
+    // Format attendu: "DD/MM/YYYY - DD/MM/YYYY"
+    const dateParts = dateStr.split(" - ");
+    if (dateParts.length === 2) {
+      const startStr = dateParts[0];
+      const [day, month, year] = startStr.split("/").map(Number);
+      
+      if (day && month && year) {
+        const date = new Date(year, month - 1, day);
+        const options: Intl.DateTimeFormatOptions = { 
+          weekday: "long", 
+          day: "numeric", 
+          month: "long", 
+          year: "numeric" 
+        };
+        return `Le ${date.toLocaleDateString("fr-FR", options)}`;
+      }
+    }
+  } catch (error) {
+    console.error("Erreur lors du parsing de la date:", error);
+  }
+  
+  return dateStr;
+};
+
 const TripCard = ({ voyage, index = 0 }: TripCardProps) => {
+  const isNationalVoyage = voyage.category === "Voyage National";
+  const hasSchedule = isNationalVoyage && voyage.departureTime && voyage.returnTime;
+  const formattedDate = isNationalVoyage ? formatNationalVoyageDate(voyage.date) : null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -43,6 +101,11 @@ const TripCard = ({ voyage, index = 0 }: TripCardProps) => {
             <span className="absolute top-4 left-4 text-upperspace bg-background/90 backdrop-blur-sm px-3 py-1 rounded-md text-primary text-xs font-semibold">
               {voyage.category}
             </span>
+            {isNationalVoyage && (
+              <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm p-2 rounded-md shadow-md" title="Algérie">
+                <AlgerianFlagIcon />
+              </div>
+            )}
             <VoyageStatusBadge status={voyage.status} />
           </div>
           <div className="p-6">
@@ -67,6 +130,34 @@ const TripCard = ({ voyage, index = 0 }: TripCardProps) => {
                   <p className="text-xs text-accent font-medium">
                     +{voyage.stages.length - 2} étape{voyage.stages.length - 2 > 1 ? "s" : ""}
                   </p>
+                )}
+              </div>
+            )}
+
+            {/* Affichage dynamique pour Voyage National */}
+            {isNationalVoyage && (
+              <div className="mb-4 pb-4 border-b border-gray-200">
+                {/* Affichage de la date */}
+                <div className="mb-3">
+                  <p className="text-xs font-semibold text-muted-foreground mb-1">Date</p>
+                  <p className="text-sm font-medium text-primary">{formattedDate}</p>
+                </div>
+                
+                {/* Affichage des horaires si disponibles */}
+                {hasSchedule && (
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">Horaires</p>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span>🕒</span>
+                      <span className="text-muted-foreground">
+                        Départ: <span className="font-semibold text-primary">{voyage.departureTime}</span>
+                      </span>
+                      <span className="text-gray-400">|</span>
+                      <span className="text-muted-foreground">
+                        Retour: <span className="font-semibold text-primary">{voyage.returnTime}</span>
+                      </span>
+                    </div>
+                  </div>
                 )}
               </div>
             )}
@@ -105,6 +196,8 @@ const TripCard = ({ voyage, index = 0 }: TripCardProps) => {
                 <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-md font-medium">
                   Sur mesure
                 </span>
+              ) : isNationalVoyage ? (
+                <span className="text-xs text-muted-foreground">{voyage.duration}</span>
               ) : (
                 <span className="text-xs text-muted-foreground">{voyage.duration}</span>
               )}

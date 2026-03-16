@@ -27,6 +27,9 @@ const App = () => (
             <Route path="/voyage-organise" element={
               <VoyageListPage category="Voyage Organisé" title="Voyages Organisés" description="Découvrez nos circuits culturels et historiques accompagnés par des guides francophones." />
             } />
+            <Route path="/voyage-national" element={
+              <VoyageListPage category="Voyage National" title="Voyages Nationaux" description="Explorez les merveilles de l'Algérie : déserts, côtes et patrimoine culturel riche." />
+            } />
             <Route path="/voyage-a-la-carte" element={
               <VoyageListPage category="Voyage à la Carte" title="Voyages à la Carte" description="Un voyage entièrement personnalisé selon vos envies, votre budget et votre calendrier." />
             } />
