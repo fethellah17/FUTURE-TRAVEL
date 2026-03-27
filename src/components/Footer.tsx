@@ -55,7 +55,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} EGOSANDIA VOYAGE. Tous droits réservés.
+            © 2024 EGOSANDIA VOYAGE. Tous droits réservés.
           </p>
           <Link
             to="/admin"

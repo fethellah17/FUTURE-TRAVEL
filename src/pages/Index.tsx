@@ -67,8 +67,8 @@ const Index = () => {
             {[
               { 
                 icon: Shield, 
-                title: "Confiance & Expérience", 
-                desc: "Votre agence partenaire depuis <strong>2007</strong>. Agréée par le <strong>Ministère du Tourisme</strong> ainsi que l'<strong>ONPO</strong> (Office National du Pèlerinage et de la Omra)." 
+                title: "Votre Partenaire de Confiance", 
+                desc: "EGOSANDIA VOYAGE vous accompagne dans l'organisation de vos voyages nationaux, internationaux et Omra avec professionnalisme et passion. Explorez le monde avec l'esprit serein." 
               },
               { icon: Compass, title: "Accompagnement", desc: "Un guide francophone vous accompagne à chaque étape de votre voyage." },
               { icon: HeartHandshake, title: "Sur Mesure", desc: "Chaque voyage est adapté à vos besoins, votre budget et vos envies." },
