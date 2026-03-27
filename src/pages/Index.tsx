@@ -30,7 +30,7 @@ const Index = () => {
             transition={{ type: "spring", stiffness: 150, damping: 25 }}
             className="max-w-2xl"
           >
-            <p className="text-upperspace text-accent mb-4">ZAHRAT AL HOUDA</p>
+            <p className="text-upperspace text-accent mb-4">EGOSANDIA VOYAGE</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 leading-tight">
               Votre pèlerinage commence par la confiance.
             </h1>

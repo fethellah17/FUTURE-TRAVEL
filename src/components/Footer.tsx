@@ -29,33 +29,24 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <MapPin size={16} className="text-[#FFD700] flex-shrink-0" />
-                <span className="text-muted-foreground">Akid Lotfi - Oran - Algérie</span>
+                <span className="text-muted-foreground">Oran - Belghaid</span>
               </li>
               <li className="flex items-center gap-3">
                 <Smartphone size={16} className="text-[#FFD700] flex-shrink-0" />
                 <a 
-                  href="tel:0661206019" 
+                  href="tel:0558737855" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  0661 20 60 19
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={16} className="text-[#FFD700] flex-shrink-0" />
-                <a 
-                  href="tel:041509040" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  041 50 90 40
+                  0558 73 78 55
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-[#FFD700] flex-shrink-0" />
                 <a 
-                  href="mailto:zhvoyagesdz@gmail.com" 
+                  href="mailto:Egosandiavoyages@gmail.com" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  zhvoyagesdz@gmail.com
+                  Egosandiavoyages@gmail.com
                 </a>
               </li>
             </ul>
@@ -64,7 +55,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} ZAHRAT AL HOUDA. Tous droits réservés.
+            © {new Date().getFullYear()} EGOSANDIA VOYAGE. Tous droits réservés.
           </p>
           <Link
             to="/admin"

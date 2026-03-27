@@ -11,7 +11,7 @@ interface MetaTagsProps {
 export const useMetaTags = ({ title, description, image, url, type = 'website' }: MetaTagsProps) => {
   useEffect(() => {
     // Titre de la page avec branding
-    const fullTitle = `${title} | ZAHRAT AL HOUDA`;
+    const fullTitle = `${title} | EGOSANDIA VOYAGE`;
     document.title = fullTitle;
 
     // Fonction helper pour créer ou mettre à jour une balise meta
@@ -35,7 +35,7 @@ export const useMetaTags = ({ title, description, image, url, type = 'website' }
     setMetaTag('og:title', fullTitle);
     setMetaTag('og:description', description);
     setMetaTag('og:type', type);
-    setMetaTag('og:site_name', 'ZAHRAT AL HOUDA');
+    setMetaTag('og:site_name', 'EGOSANDIA VOYAGE');
     setMetaTag('og:locale', 'fr_FR');
     
     if (url) {
@@ -56,7 +56,7 @@ export const useMetaTags = ({ title, description, image, url, type = 'website' }
     setMetaTag('twitter:card', 'summary_large_image', false);
     setMetaTag('twitter:title', fullTitle, false);
     setMetaTag('twitter:description', description, false);
-    setMetaTag('twitter:site', '@ZahratAlHouda', false);
+    setMetaTag('twitter:site', '@EgosandiaVoyage', false);
     
     if (image) {
       setMetaTag('twitter:image', image, false);
@@ -77,7 +77,7 @@ export const useMetaTags = ({ title, description, image, url, type = 'website' }
 
     // Cleanup function pour réinitialiser au démontage
     return () => {
-      document.title = 'ZAHRAT AL HOUDA – Agence de Voyage';
+      document.title = 'EGOSANDIA VOYAGE - Agence de Voyage';
     };
   }, [title, description, image, url, type]);
 };

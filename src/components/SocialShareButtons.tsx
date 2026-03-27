@@ -10,7 +10,7 @@ interface SocialShareButtonsProps {
 
 const SocialShareButtons = ({ title, price, url }: SocialShareButtonsProps) => {
   // Message WhatsApp optimisé et attractif
-  const whatsappMessage = `Bonjour ! Regarde cette superbe offre chez l'agence Zahrat Al Houda 🕋 : ${title} au prix de ${price}. Découvrez tous les détails ici : ${url}`;
+  const whatsappMessage = `Bonjour ! Regarde cette superbe offre chez l'agence EGOSANDIA VOYAGE 🕋 : ${title} au prix de ${price}. Découvrez tous les détails ici : ${url}`;
 
   const handleWhatsAppShare = () => {
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;

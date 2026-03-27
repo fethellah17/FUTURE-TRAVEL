@@ -13,14 +13,14 @@ const LocationMap = () => {
         <div className="flex justify-center">
           <div className="w-full md:max-w-2xl overflow-hidden rounded-3xl shadow-lg border-2 border-[#FFD700]/20">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937595!2d2.3522219156743886!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUxJzMwLjEiTiAywrAyMScwNy45IkU!5e0!3m2!1sfr!2sfr!4v1234567890123!5m2!1sfr!2sfr"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3306.8!2d-0.6298!3d35.6911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQxJzI4LjAiTiAwwrAzNyc0Ny4zIlc!5e0!3m2!1sfr!2sdz!4v1234567890123!5m2!1sfr!2sdz"
               width="100%"
               height="250"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Localisation ZAHRAT AL HOUDA"
+              title="Localisation EGOSANDIA VOYAGE"
               className="w-full block"
             />
           </div>
@@ -29,7 +29,7 @@ const LocationMap = () => {
         {/* Bouton Ouvrir dans Google Maps */}
         <div className="text-center mt-6">
           <a
-            href="https://maps.app.goo.gl/tiGchNCyyDqKswGY6"
+            href="https://maps.app.goo.gl/f4NTSoi4aueUDAgd8?g_st=ic"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium shadow-md hover:shadow-lg"

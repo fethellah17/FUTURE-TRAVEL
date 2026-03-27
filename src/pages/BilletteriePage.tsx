@@ -73,7 +73,7 @@ const BilletteriePage = () => {
       });
       
       setStatus("success");
-      toast.success("Votre demande de billetterie a été envoyée avec succès à Zahrat Al Houda !");
+      toast.success("Votre demande de billetterie a été envoyée avec succès à EGOSANDIA VOYAGE !");
       
       // Réinitialiser le formulaire après 2 secondes
       setTimeout(() => {
@@ -160,7 +160,7 @@ const BilletteriePage = () => {
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         className="devis-input"
-                        placeholder="EX : fethellahhadjbouziane@gmail.com"
+                        placeholder="EX : Egosandiavoyages@gmail.com"
                       />
                     </Field>
                     <Field label="Téléphone portable *" error={errors.telephone}>
@@ -169,7 +169,7 @@ const BilletteriePage = () => {
                         value={form.telephone}
                         onChange={(e) => setForm({ ...form, telephone: e.target.value })}
                         className="devis-input"
-                        placeholder="EX : 0661206019"
+                        placeholder="EX : 0558737855"
                       />
                     </Field>
                   </div>

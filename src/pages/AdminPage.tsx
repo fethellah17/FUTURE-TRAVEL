@@ -204,7 +204,7 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1.5">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" placeholder="EX : fethellahhadjbouziane@gmail.com" required />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" placeholder="EX : Egosandiavoyages@gmail.com" required />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1.5">Mot de passe</label>

@@ -22,7 +22,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <nav className="container mx-auto flex items-center justify-between h-20 px-4 lg:px-8">
         <Link to="/" className="flex items-center gap-3 py-2">
-          <img src={logo} alt="ZAHRAT AL HOUDA" className="h-16 w-auto lg:h-20" />
+          <img src={logo} alt="ZAHRAT AL HOUDA" className="h-14 w-auto lg:h-16" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1">
@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* WhatsApp Contact Button */}
           <motion.a
-            href="https://wa.me/213661206019?text=Bonjour%20Agence%20Zahrat%20Al%20Houda,%20je%20souhaite%20avoir%20plus%20d'informations%20sur%20vos%20offres."
+            href="https://wa.me/213558737855?text=Bonjour%20Agence%20EGOSANDIA%20VOYAGE,%20je%20souhaite%20avoir%20plus%20d'informations%20sur%20vos%20offres."
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors duration-200 group"
@@ -71,13 +71,13 @@ const Navbar = () => {
           >
             <MessageCircle className="w-5 h-5 text-green-600 group-hover:text-green-700 transition-colors" />
             <span className="text-sm font-medium text-green-700 group-hover:text-green-800 transition-colors hidden md:inline">
-              0661 20 60 19
+              0558 73 78 55
             </span>
           </motion.a>
 
           {/* Mobile WhatsApp Icon */}
           <motion.a
-            href="https://wa.me/213661206019?text=Bonjour%20Agence%20Zahrat%20Al%20Houda,%20je%20souhaite%20avoir%20plus%20d'informations%20sur%20vos%20offres."
+            href="https://wa.me/213558737855?text=Bonjour%20Agence%20EGOSANDIA%20VOYAGE,%20je%20souhaite%20avoir%20plus%20d'informations%20sur%20vos%20offres."
             target="_blank"
             rel="noopener noreferrer"
             className="sm:hidden p-2 rounded-lg bg-green-50 hover:bg-green-100 transition-colors duration-200"
