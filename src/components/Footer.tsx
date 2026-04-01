@@ -55,7 +55,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            © 2024 AZ VOYAGES. Tous droits réservés.
+            © 2026 AZ VOYAGES. Tous droits réservés.
           </p>
           <Link
             to="/admin"
