@@ -26,7 +26,7 @@ export const generateMessagePDF = (message: Message) => {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
-  addText(doc, "EGOSANDIA VOYAGE", pageWidth / 2, 15, { align: "center" });
+  addText(doc, "AZ VOYAGES", pageWidth / 2, 15, { align: "center" });
   
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
@@ -128,7 +128,7 @@ export const generateMessagePDF = (message: Message) => {
   doc.setFontSize(8);
   doc.setTextColor(100, 100, 100);
   doc.setFont("helvetica", "italic");
-  addText(doc, "www.egosandiavoyage.com - Votre partenaire de confiance pour vos voyages", pageWidth / 2, footerY, { align: "center" });
+  addText(doc, "www.azvoyages.com - Votre partenaire de confiance pour vos voyages", pageWidth / 2, footerY, { align: "center" });
 
   // Télécharger le PDF
   const fileName = `${message.type}_${message.name.replace(/\s+/g, "_")}_${new Date().getTime()}.pdf`;

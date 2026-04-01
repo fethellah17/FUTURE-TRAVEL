@@ -85,7 +85,7 @@ const AdminPage = () => {
         >
           <Menu size={24} />
         </button>
-        <img src={logo} alt="ZAHRAT AL HOUDA" className="h-10 w-auto" />
+        <img src={logo} alt="AZ VOYAGES" className="h-10 w-auto" />
         <div className="w-10" /> {/* Spacer pour centrer le logo */}
       </div>
 
@@ -111,7 +111,7 @@ const AdminPage = () => {
       `}>
         <div className="p-6 border-b border-accent/20">
           <Link to="/" className="flex flex-col items-center">
-            <img src={logo} alt="ZAHRAT AL HOUDA" className="h-16 w-auto mb-3" />
+            <img src={logo} alt="AZ VOYAGES" className="h-16 w-auto mb-3" />
           </Link>
           <p className="text-xs text-muted-foreground mt-2 text-center">Administration</p>
         </div>
@@ -198,13 +198,13 @@ const AdminLogin = ({ onLogin }: { onLogin: () => void }) => {
         className="w-full max-w-sm bg-white p-6 sm:p-8 rounded-2xl shadow-elegant border border-accent/20"
       >
         <div className="text-center mb-6 sm:mb-8">
-          <img src={logo} alt="ZAHRAT AL HOUDA" className="h-20 sm:h-24 w-auto mx-auto mb-4" />
+          <img src={logo} alt="AZ VOYAGES" className="h-20 sm:h-24 w-auto mx-auto mb-4" />
           <p className="text-sm text-muted-foreground">Administration</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1.5">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" placeholder="EX : Egosandiavoyages@gmail.com" required />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" placeholder="EX : azvoyages@gmail.com" required />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1.5">Mot de passe</label>
