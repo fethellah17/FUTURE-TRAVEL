@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
-            <img src={logo} alt="AZ VOYAGES" className="h-16 w-auto mb-4" />
+            <img src={logo} alt="FUTURE TRAVEL" className="h-16 w-auto mb-4" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               Votre partenaire de confiance pour les pèlerinages et voyages organisés. Nous vous accompagnons à chaque étape.
             </p>
@@ -29,33 +29,33 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <MapPin size={16} className="text-[#FFD700] flex-shrink-0" />
-                <span className="text-muted-foreground">Tizi Ouzou, Algérie</span>
+                <span className="text-muted-foreground">Birkhadem, Alger</span>
               </li>
               <li className="flex items-center gap-3">
                 <Smartphone size={16} className="text-[#FFD700] flex-shrink-0" />
                 <a 
-                  href="tel:0662901937" 
+                  href="tel:0772175766" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  0662 90 19 37
+                  0772 17 57 66
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-[#FFD700] flex-shrink-0" />
                 <a 
-                  href="tel:0791916990" 
+                  href="tel:0558639717" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  0791 91 69 90
+                  0558 63 97 17
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-[#FFD700] flex-shrink-0" />
                 <a 
-                  href="mailto:azvoyages15@gmail.com" 
+                  href="mailto:futuretravel01@gmail.com" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  azvoyages15@gmail.com
+                  futuretravel01@gmail.com
                 </a>
               </li>
             </ul>
@@ -64,7 +64,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            © 2026 AZ VOYAGES. Tous droits réservés.
+            © 2026 FUTURE TRAVEL. Tous droits réservés.
           </p>
           <Link
             to="/admin"
