@@ -73,7 +73,7 @@ const BilletteriePage = () => {
       });
       
       setStatus("success");
-      toast.success("Votre demande de billetterie a été envoyée avec succès à AZ VOYAGES !");
+      toast.success("Votre demande de billetterie a été envoyée avec succès à FUTURE TRAVEL !");
       
       // Réinitialiser le formulaire après 2 secondes
       setTimeout(() => {
