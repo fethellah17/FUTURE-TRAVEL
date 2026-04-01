@@ -11,7 +11,7 @@ interface MetaTagsProps {
 export const useMetaTags = ({ title, description, image, url, type = 'website' }: MetaTagsProps) => {
   useEffect(() => {
     // Titre de la page avec branding
-    const fullTitle = `${title} | AZ VOYAGES`;
+    const fullTitle = `${title} | FUTURE TRAVEL`;
     document.title = fullTitle;
 
     // Fonction helper pour créer ou mettre à jour une balise meta
@@ -35,7 +35,7 @@ export const useMetaTags = ({ title, description, image, url, type = 'website' }
     setMetaTag('og:title', fullTitle);
     setMetaTag('og:description', description);
     setMetaTag('og:type', type);
-    setMetaTag('og:site_name', 'AZ VOYAGES');
+    setMetaTag('og:site_name', 'FUTURE TRAVEL');
     setMetaTag('og:locale', 'fr_FR');
     
     if (url) {
@@ -77,7 +77,7 @@ export const useMetaTags = ({ title, description, image, url, type = 'website' }
 
     // Cleanup function pour réinitialiser au démontage
     return () => {
-      document.title = 'AZ VOYAGES - Agence de Voyage';
+      document.title = 'FUTURE TRAVEL - Agence de Voyage';
     };
   }, [title, description, image, url, type]);
 };

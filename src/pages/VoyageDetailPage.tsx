@@ -108,7 +108,7 @@ const VoyageDetailPage = () => {
             <ChevronLeft size={20} />
             <span className="text-sm font-medium">Retour</span>
           </button>
-          <img src={logo} alt="AZ VOYAGES" className="h-8 w-auto" />
+          <img src={logo} alt="FUTURE TRAVEL" className="h-8 w-auto" />
           <div className="w-20" />
         </div>
       </div>

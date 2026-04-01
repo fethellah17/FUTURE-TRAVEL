@@ -30,7 +30,7 @@ const Index = () => {
             transition={{ type: "spring", stiffness: 150, damping: 25 }}
             className="max-w-2xl"
           >
-            <p className="text-upperspace text-accent mb-4">AZ VOYAGES</p>
+            <p className="text-upperspace text-accent mb-4">FUTURE TRAVEL</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 leading-tight">
               Votre pèlerinage commence par la confiance.
             </h1>
@@ -68,7 +68,7 @@ const Index = () => {
               { 
                 icon: Shield, 
                 title: "Votre Partenaire de Confiance", 
-                desc: "AZ VOYAGES vous accompagne dans l'organisation de vos voyages nationaux, internationaux et Omra avec professionnalisme et passion. Explorez le monde avec l'esprit serein." 
+                desc: "FUTURE TRAVEL vous accompagne dans l'organisation de vos voyages nationaux, internationaux et Omra avec professionnalisme et passion. Explorez le monde avec l'esprit serein." 
               },
               { icon: Compass, title: "Accompagnement", desc: "Un guide francophone vous accompagne à chaque étape de votre voyage." },
               { icon: HeartHandshake, title: "Sur Mesure", desc: "Chaque voyage est adapté à vos besoins, votre budget et vos envies." },

@@ -20,7 +20,7 @@ const LocationMap = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Localisation AZ VOYAGES"
+              title="Localisation FUTURE TRAVEL"
               className="w-full block"
             />
           </div>
