@@ -56,7 +56,7 @@ export const useMetaTags = ({ title, description, image, url, type = 'website' }
     setMetaTag('twitter:card', 'summary_large_image', false);
     setMetaTag('twitter:title', fullTitle, false);
     setMetaTag('twitter:description', description, false);
-    setMetaTag('twitter:site', '@AZVoyages', false);
+    setMetaTag('twitter:site', '@FutureTravel', false);
     
     if (image) {
       setMetaTag('twitter:image', image, false);

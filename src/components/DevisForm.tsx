@@ -181,7 +181,7 @@ const DevisForm = ({ prefilledDestination = "", showLayout = false, voyageData }
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="devis-input"
-                  placeholder="EX : azvoyages@gmail.com"
+                  placeholder="EX : futuretravel01@gmail.com"
                 />
               </Field>
               <Field label="Téléphone *" error={errors.telephone}>

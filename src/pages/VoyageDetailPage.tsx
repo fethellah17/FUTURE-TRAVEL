@@ -102,7 +102,14 @@ const VoyageDetailPage = () => {
       <div className="sticky top-0 z-40 bg-white border-b border-accent/20 px-4 sm:px-6 lg:px-8 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              // Vérifier s'il y a un historique, sinon aller à l'accueil
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate("/");
+              }
+            }}
             className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
           >
             <ChevronLeft size={20} />
@@ -376,7 +383,14 @@ const VoyageDetailPage = () => {
               </button>
 
               <button
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  // Vérifier s'il y a un historique, sinon aller à l'accueil
+                  if (window.history.length > 1) {
+                    navigate(-1);
+                  } else {
+                    navigate("/");
+                  }
+                }}
                 className="w-full bg-muted text-foreground px-6 py-3 rounded-lg font-semibold hover:bg-muted/80 transition-colors"
               >
                 Retour
